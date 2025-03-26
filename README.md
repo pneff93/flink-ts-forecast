@@ -1,18 +1,24 @@
+Here is everything in one markdown block for easy copying:
+
+```markdown
 # CC Flink Time Series Forecasting
 
-Goal we would like to forecast the next values of a stock price using the new `ML_FORECAST()` function in CC Flink.
+The goal of this task is to forecast the next values of a stock price using the new `ML_FORECAST()` function in CC Flink.
 
 ## Approach
 
-We first create the table and insert some test data. This test data is linear increasing with some error term.
-```
+We begin by creating a table and inserting some test data. This data consists of a linear increase in stock prices with some error term included.
+
+### Step 1: Create the table and insert test data
+
+```sql
 CREATE TABLE pneff_stocks (
-    stock_price double,
+    stock_price DOUBLE,
     ts TIMESTAMP(3) NOT NULL
 );
 ```
 
-```
+```sql
 INSERT INTO pneff_stocks (stock_price, ts) VALUES
   (9.98, TIMESTAMP '2024-11-19 10:00:00.000'),
   (9.31, TIMESTAMP '2024-11-19 10:01:00.000'),
@@ -46,41 +52,41 @@ INSERT INTO pneff_stocks (stock_price, ts) VALUES
   (78.54, TIMESTAMP '2024-11-19 10:29:00.000');
 ```
 
-```
+### Step 2: View the inserted data
+
+```sql
 SELECT * FROM pneff_stocks;
 ```
 
-image
+### Step 3: Apply the new ARIMA model for time series forecasting
 
+We will now use the new `ML_FORECAST()` function to apply an ARIMA model to our time series data. For more information about the individual parameters, refer to the [documentation](https://staging-docs-independent.confluent.io/docs-cloud/PR/4751/current/ai/forecast.html).
 
-We know apply the new functionality which applies an ARIMA model on our time series data. For more information about the individual parameters, etc, see the [documentation)(https://staging-docs-independent.confluent.io/docs-cloud/PR/4751/current/ai/forecast.html).
-
+```sql
+CREATE TABLE pneff_stocks_predict AS
+SELECT ML_FORECAST(
+    stock_price,
+    ts,
+    JSON_OBJECT('p' VALUE 1, 'q' VALUE 1, 'd' VALUE 1, 'minTrainingSize' VALUE 10, 'horizon' VALUE 5)
+) AS forecast
+FROM pneff_stocks;
 ```
-CREATE TABLE pneff_stocks_predict AS SELECT ML_FORECAST(
- stock_price,
- ts,
- JSON_OBJECT('p' VALUE 1, 'q' VALUE 1, 'd' VALUE 1, 'minTrainingSize' VALUE 10, 'horizon' VALUE 5)) AS forecast
-FROM pneff_stocks
-```
 
-We set the `horizon` to 5 to predict the next 5 values
+In this example, we set the `horizon` to 5 to predict the next 5 values.
 
-Let's check the structure of the output
+### Step 4: Check the structure of the output
 
-```
+```sql
 DESCRIBE EXTENDED `team-global`.`csta_global_cluster`.`pneff_stocks_predict`;
 ```
 
-image
+### Step 5: Retrieve only the predicted values
 
-Now let's scrape only the predicted values via
-
-```
+```sql
 SELECT
   t.`timestamp` AS ts,
-  t.`forecast_value` As prediction
+  t.`forecast_value` AS prediction
 FROM `pneff_stocks_predict`,
 UNNEST(`forecast`) AS t;
 ```
-
-image 
+```
