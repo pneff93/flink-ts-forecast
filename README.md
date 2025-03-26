@@ -1,6 +1,3 @@
-Here is everything in one markdown block for easy copying:
-
-```markdown
 # CC Flink Time Series Forecasting
 
 The goal of this task is to forecast the next values of a stock price using the new `ML_FORECAST()` function in CC Flink.
