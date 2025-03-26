@@ -1,6 +1,7 @@
 # CC Flink Time Series Forecasting
 
 The goal of this task is to forecast the next values of a stock price using the new `ML_FORECAST()` function in CC Flink.
+* [Documentation IN PREVIEW](https://staging-docs-independent.confluent.io/docs-cloud/PR/4751/current/ai/forecast.html#)
 
 ## Approach
 
@@ -58,7 +59,7 @@ SELECT * FROM pneff_stocks;
 
 ### Step 3: Apply the new ARIMA model for time series forecasting
 
-We will now use the new `ML_FORECAST()` function to apply an ARIMA model to our time series data. For more information about the individual parameters, refer to the [documentation](https://staging-docs-independent.confluent.io/docs-cloud/PR/4751/current/ai/forecast.html).
+We will now use the new `ML_FORECAST()` function to apply an ARIMA model to our time series data. For more information about the individual parameters, refer to the [documentation](https://staging-docs-independent.confluent.io/docs-cloud/PR/4751/current/flink/reference/functions/model-inference-functions.html#ml-forecast).
 
 ```sql
 CREATE TABLE pneff_stocks_predict AS
