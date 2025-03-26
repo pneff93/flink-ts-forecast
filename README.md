@@ -1,7 +1,7 @@
 # CC Flink Time Series Forecasting
 
 The goal of this task is to forecast the next values of a stock price using the new `ML_FORECAST()` function in CC Flink.
-* [Documentation IN PREVIEW](https://staging-docs-independent.confluent.io/docs-cloud/PR/4751/current/ai/forecast.html#)
+* [Documentation <IN PREVIEW>](https://staging-docs-independent.confluent.io/docs-cloud/PR/4751/current/ai/forecast.html#)
 
 ## Approach
 
