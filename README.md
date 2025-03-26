@@ -54,6 +54,7 @@ INSERT INTO pneff_stocks (stock_price, ts) VALUES
 ```sql
 SELECT * FROM pneff_stocks;
 ```
+![](image_1.png)
 
 ### Step 3: Apply the new ARIMA model for time series forecasting
 
@@ -76,6 +77,7 @@ In this example, we set the `horizon` to 5 to predict the next 5 values.
 ```sql
 DESCRIBE EXTENDED `team-global`.`csta_global_cluster`.`pneff_stocks_predict`;
 ```
+![](image_2.png)
 
 ### Step 5: Retrieve only the predicted values
 
@@ -86,4 +88,4 @@ SELECT
 FROM `pneff_stocks_predict`,
 UNNEST(`forecast`) AS t;
 ```
-```
+![](image_3.png)
