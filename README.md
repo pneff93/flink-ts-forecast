@@ -89,3 +89,4 @@ FROM `pneff_stocks_predict`,
 UNNEST(`forecast`) AS t;
 ```
 ![](image_3.png)
+![](image_4.png)
